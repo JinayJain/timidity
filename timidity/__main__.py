@@ -1,9 +1,10 @@
-from midi.parser import parse_midi
-from midi.player import play_notes
+from timidity.parser import parse_midi
+from timidity.player import play_notes
 from glob import glob
 from scipy.io import wavfile
 import os
 from scipy.signal import sawtooth, square
+import numpy as np
 
 
 def run():
@@ -17,7 +18,7 @@ def run():
     selection = midi_list[select_idx]
 
     notes, tpq, bpm = parse_midi(selection)
-    audio, player = play_notes(notes, tpq, bpm, sawtooth)
+    audio, player = play_notes(notes, tpq, bpm, np.sin)
 
     basename = os.path.splitext(os.path.basename(selection))[0]
     wavfile.write(f"wav/{basename}.wav", 44100, audio)

@@ -3,7 +3,7 @@ import simpleaudio as sa
 import numpy as np
 
 
-def play_notes(notes, ticks_per_quarter, bpm, wave):
+def play_notes(notes, ticks_per_quarter, bpm, wave, wait_done=True):
 
     sample_rate = 44100
     volume = 0.5
@@ -14,15 +14,13 @@ def play_notes(notes, ticks_per_quarter, bpm, wave):
     def get_freq(note):
         return (440. * (2 ** ((note - 69) / 12.)))
 
-    print("TPQ: %d BPM: %d" % (ticks_per_quarter, bpm))
     song_time = to_seconds(notes[-1].end)
 
     t = np.linspace(0., song_time, (int)(song_time * sample_rate), False)
     song = np.zeros_like(t)
 
-    print("Arranging notes...")
     for idx, note in enumerate(notes):
-        print("\rIndex: %d / %d" % (idx + 1, len(notes)), end='')
+        print("\rArranging notes... %d / %d" % (idx + 1, len(notes)), end='')
         start_pos = np.searchsorted(t, to_seconds(note.start))
         end_pos = np.searchsorted(t, to_seconds(note.end))
 
@@ -36,5 +34,8 @@ def play_notes(notes, ticks_per_quarter, bpm, wave):
 
     print("Playing song...")
     player = sa.play_buffer(audio, 1, 2, sample_rate)
+
+    if wait_done:
+        player.wait_done()
 
     return audio, player
