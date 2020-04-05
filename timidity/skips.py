@@ -10,4 +10,4 @@ meta_not_skips = [
     0x2F,
     0x51,
     0x58,
-]  # possibly also dont skip keysig
+]

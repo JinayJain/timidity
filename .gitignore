@@ -1,9 +1,9 @@
 .venv
 .vscode
-*.egg-info
-wav
-songs
+wav/
+songs/
 secret
+dev/
 
 
 # PYTHON GITIGNORE https://github.com/github/gitignore/blob/master/Python.gitignore
