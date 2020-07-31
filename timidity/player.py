@@ -31,9 +31,9 @@ def play_notes(notes, ticks_per_quarter, bpm, wave, wait_done=True):
         end_pos = np.searchsorted(t, to_seconds(note.end))
 
         note_t = t[start_pos:end_pos]
-        env, release = ADSR(note_t, 0.5, 0.05, 0.5, 0.2)
+        envelope, release = ADSR(note_t, 0.5, 0.2, 0.7, 0.2)
         song[start_pos:end_pos] += get_note(note_t, wave,
-                                            note.pitch, note.velocity) * ADSR(note_t, 0.01, 0.01, 0.2, 0)
+                                            note.pitch, note.velocity) * envelope
     print()
 
     song = song / np.max(song)

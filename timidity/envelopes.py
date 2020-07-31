@@ -20,10 +20,9 @@ def linear(t, initial: float, target: float):
 
 
 def ADSR(t, attack, decay, sustain, release):  # release not implemented YET
-    assert(attack >= 0)
-    assert(decay >= 0)
-    assert(sustain >= 0)
-    assert(release >= 0)
+    if t.shape[0] == 0:
+        return t, np.array([])
+    assert(attack >= 0 and decay >= 0 and sustain >= 0 and release >= 0)
 
     adsr = np.zeros_like(t)
 
@@ -36,4 +35,6 @@ def ADSR(t, attack, decay, sustain, release):  # release not implemented YET
         t_base[attack_idx:decay_idx], 1, sustain)
     adsr[decay_idx:] = sustain
 
-    return adsr
+    release = None
+
+    return adsr, release
